@@ -10,7 +10,10 @@ def part_a():
     M, a, b, c = None, None, None, None
 
     # BEGIN YOUR CODE HERE
-
+    M = np.array([[1,2,3],[4,5,6],[7,8,9],[0,2,2]])
+    a = np.array([[1],[1],[0]])
+    b = np.array([[-1],[2],[5]])
+    c = np.array([[0],[2],[3],[2]])
     # END YOUR CODE HERE
     return M, a, b, c
     
@@ -20,7 +23,7 @@ def part_b(a, b):
     aDotb = None
 
     # BEGIN YOUR CODE HERE
-
+    aDotb = np.dot(a.T, b)
     # END YOUR CODE HERE
     return aDotb
 
@@ -30,7 +33,7 @@ def part_c(a, b):
     aProdb = None
     
     # BEGIN YOUR CODE HERE
-
+    aProdb = a * b
     # END YOUR CODE HERE
     return aProdb
 
@@ -40,7 +43,9 @@ def part_d(a, b, M):
     result = None
     
     # BEGIN YOUR CODE HERE
-
+    result1 = np.dot(a.T, b)
+    result2 = M @ a
+    result = result1 * result2 
     # END YOUR CODE HERE
     return result
 
@@ -51,7 +56,7 @@ def part_e(a, M):
     newM = None
 
     # BEGIN YOUR CODE HERE
-
+    newM = M * a.T
     # END YOUR CODE HERE
     return newM
 
@@ -62,7 +67,7 @@ def part_f(M):
     sortedM = None
     
     # BEGIN YOUR CODE HERE
-
+    sortedM = np.sort(M.flatten())
     # END YOUR CODE HERE
     
     plt.bar(range(12), np.squeeze(list(sortedM)))
