@@ -11,13 +11,16 @@ def part_a():
     img1, img2 = None, None
 
     # BEGIN YOUR CODE HERE
-
+    img1 = io.imread("image1.jpg")
+    img2 = io.imread("image2.jpg")
     # END YOUR CODE HERE
 
     return img1, img2
 
 def normalize_img(img):
-    pass # TODO implement this helper function for parts b and c
+    img_min = np.min(img)
+    img_max = np.max(img)
+    return (img - img_min) / (img_max - img_min)
 
 def part_b(img1, img2):
     # ===== Problem 3b =====
@@ -25,7 +28,8 @@ def part_b(img1, img2):
     # to stretch from minimum value 0 to maximum value 1.
 
     # BEGIN YOUR CODE HERE
-
+    img1 = normalize_img(img1.astype(np.float64))
+    img2 = normalize_img(img2.astype(np.float64))
     # END YOUR CODE HERE
     
     return img1, img2
@@ -38,7 +42,8 @@ def part_c(img1, img2):
     sumImage = None
     
     # BEGIN YOUR CODE HERE
-
+    sumImage = img1 + img2
+    sumImage = normalize_img(sumImage)
     # END YOUR CODE HERE
 
     plt.figure()
@@ -53,7 +58,13 @@ def part_d(img1, img2):
     newImage1 = None
 
     # BEGIN YOUR CODE HERE
+    mid_col = img1.shape[1] // 2
 
+    newImage1 = np.zeros_like(img1)
+
+    newImage1[:, :mid_col, :] = img1[:, :mid_col, :]
+
+    newImage1[:, mid_col:, :] = img2[:, mid_col:, :]
     # END YOUR CODE HERE
 
     plt.figure()
@@ -69,6 +80,15 @@ def part_e(img1, img2):
     newImage2 = None
 
     # BEGIN YOUR CODE HERE
+    newImage2 = np.zeros_like(img1)
+
+    row = img1.shape[0]
+
+    for i in range(row):
+        if i % 2 == 0:
+            newImage2[i, :, :] = img2[i, :, :]
+        else:
+            newImage2[i, :, :] = img1[i, :, :]
 
     # END YOUR CODE HERE
 
@@ -83,6 +103,10 @@ def part_f(img1, img2):
     newImage3 = None
 
     # BEGIN YOUR CODE HERE
+    newImage3 = np.zeros_like(img1)
+
+    newImage3[0::2, :, :] = img2[0::2]
+    newImage3[1::2, :, :] = img1[1::2]
 
     # END YOUR CODE HERE
 
@@ -99,7 +123,9 @@ def part_g(img):
     grayImage = None
 
     # BEGIN YOUR CODE HERE
+    weights = np.array([0.299, 0.587, 0.114])
 
+    grayImage = np.dot(img, weights)
     # END YOUR CODE HERE
 
     plt.figure()
@@ -114,3 +140,5 @@ if __name__ == '__main__':
     newImage2 = part_e(img1, img2)
     newImage3 = part_f(img1, img2)
     grayImage = part_g(newImage3)
+
+    plt.show()
